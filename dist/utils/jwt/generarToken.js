@@ -24,11 +24,11 @@ class Token {
         return this.payload;
     }
     generarToken() {
-        this.token = jsonwebtoken_1.default.sign(this.payload, this.secret, { expiresIn: '5h' });
+        this.token = jsonwebtoken_1.default.sign(this.payload, process.env.SECRET_TOKEN, { expiresIn: '5h' });
         return this.token;
     }
     verificarToken(token) {
-        this.dataToken = jsonwebtoken_1.default.verify(token, this.secret);
+        this.dataToken = jsonwebtoken_1.default.verify(token, process.env.SECRET_TOKEN);
         return this.dataToken;
     }
 }

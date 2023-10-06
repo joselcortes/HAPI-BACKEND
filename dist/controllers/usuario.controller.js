@@ -61,7 +61,7 @@ class UsuarioController {
             try {
                 const { idUsuario } = req.params;
                 let contrasenaHasheada;
-                const { rutProfesional, nombreProfesional, cargoProfesional, contrasenaProfesional, rolProfesional, centroProfesional, } = req.body;
+                const { rutProfesional, nombreProfesional, cargoProfesional, contrasenaProfesional, rolProfesional, centroProfesional, estadoProfesional, } = req.body;
                 contrasenaHasheada = yield (0, hash_contrasena_1.hashContrasena)(contrasenaProfesional);
                 objUsuario.setRutProfesional(rutProfesional);
                 objUsuario.setNombreProfesional(nombreProfesional);
@@ -69,6 +69,7 @@ class UsuarioController {
                 objUsuario.setContrasenaProfesional(contrasenaHasheada);
                 objUsuario.setRolProfesional(rolProfesional);
                 objUsuario.setCentroProfesional(centroProfesional);
+                objUsuario.setEstado(parseInt(estadoProfesional));
                 const msjActualizarUsuario = yield objUsuario.actualizarUsuario(parseInt(idUsuario));
                 res.status(201).json(msjActualizarUsuario);
             }

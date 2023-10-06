@@ -21,6 +21,7 @@ class Login {
     constructor(email, password) {
         this.email = email,
             this.password = password;
+        // process.env.SECRET_TOKEN = 'MILuLTRAsECRETO';
     }
     verificarCuenta() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -63,6 +64,10 @@ Login.verificarCuentaLogin = (usuario, password) => {
             reject('Usuario o contraseña incorrectos');
             return;
         }
+        if (respuesta[0].estado != 1) {
+            reject('El usuario se encuentra inactivo');
+            return;
+        }
         resolve(respuesta);
         return;
     }));
@@ -72,9 +77,10 @@ Login.generarToken = (usuario) => {
     const us = usuario[0].nombre_usuario;
     const rol = usuario[0].roles;
     const prof = usuario[0].cargo_profesional_salud;
+    // const secret = process.env.SECRET_TOKEN = 'MILuLTRAsECRETO';
     const payload = { id, us, rol, prof };
-    return jsonwebtoken_1.default.sign(payload, process.env.JWT, {
-        expiresIn: '1h'
+    return jsonwebtoken_1.default.sign(payload, process.env.SECRET_TOKEN, {
+        expiresIn: '5h'
     });
 };
 exports.Login = Login;

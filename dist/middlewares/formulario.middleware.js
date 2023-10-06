@@ -51,7 +51,7 @@ function buscarRut(req, res, next) {
             next();
         }
         catch (err) {
-            res.status(500).json({
+            res.status(404).json({
                 ok: false,
                 err,
             });

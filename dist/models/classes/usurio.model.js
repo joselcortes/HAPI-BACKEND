@@ -14,25 +14,27 @@ const consultasGenerales_1 = require("../../consultas/consultasGenerales");
 class Usuario {
     //admin
     //commonUser
-    constructor(rutProfesional, nombreProfesional, contrasenaProfesional, cargoProfesional, rolProfesional, centroProfesional) {
+    constructor(rutProfesional, nombreProfesional, contrasenaProfesional, cargoProfesional, rolProfesional, centroProfesional, estadoProfesional) {
         this.rutProfesional = rutProfesional;
         this.nombreProfesional = nombreProfesional;
         this.contrasenaProfesional = contrasenaProfesional;
         this.cargoProfesional = cargoProfesional;
         this.rolProfesional = rolProfesional;
         this.centroProfesional = centroProfesional;
+        this.estadoProfesional = estadoProfesional;
     }
     ingresarUsuario() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = `INSERT INTO PROFESIONALES_USUARIOS_SALUD VALUES (NULL,?,?,?,?,?,?)`;
+                const query = `INSERT INTO PROFESIONALES_USUARIOS_SALUD VALUES (NULL,?,?,?,?,?,?,?)`;
                 yield (0, consultasGenerales_1.consultasGenerales)(query, [
                     this.rutProfesional,
                     this.nombreProfesional,
                     this.contrasenaProfesional,
                     this.cargoProfesional,
                     this.rolProfesional,
-                    this.centroProfesional
+                    this.centroProfesional,
+                    1
                 ]);
                 return "Usuario ha sido creado";
             }
@@ -52,7 +54,8 @@ class Usuario {
       contrasena = ?,
       cargo_profesional_salud  = ?,
       roles = ?,
-      fk_centro_salud = ?
+      fk_centro_salud = ?,
+      estado = ?
       WHERE id_profesional_salud = ?`;
                 (0, consultasGenerales_1.consultasGenerales)(query, [
                     this.rutProfesional,
@@ -61,6 +64,7 @@ class Usuario {
                     this.cargoProfesional,
                     this.rolProfesional,
                     this.centroProfesional,
+                    this.estadoProfesional,
                     idProfesionalSalud,
                 ]);
                 return "Los cambios se han guardado correctamente";
@@ -80,7 +84,7 @@ class Usuario {
         rut_profesional_salud,
         nombre_usuario,
         cargo_profesional_salud,  
-        fk_centro_salud, roles FROM profesionales_usuarios_salud WHERE roles != ?`;
+        fk_centro_salud, roles, estado FROM profesionales_usuarios_salud WHERE roles != ?`;
                 const listUsuarios = yield (0, consultasGenerales_1.consultasGenerales)(query, [rolApartado]);
                 return listUsuarios;
             }
@@ -115,7 +119,7 @@ class Usuario {
         rut_profesional_salud,
         nombre_usuario,
         cargo_profesional_salud,  
-        fk_centro_salud, roles FROM profesionales_usuarios_salud WHERE rut_profesional_salud = '${rutUser}'`;
+        fk_centro_salud, roles, estado FROM profesionales_usuarios_salud WHERE rut_profesional_salud = '${rutUser}'`;
                 const listUsuarios = yield (0, consultasGenerales_1.consultasGenerales)(query, [rutUser]);
                 return listUsuarios;
             }
@@ -138,6 +142,24 @@ class Usuario {
             }
         });
     }
+    buscarUsuario(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const query = `
+      select id_profesional_salud, nombre_usuario, cargo_profesional_salud,
+      roles, co.nombre_comuna  , nombre_centro_salud ,logo  from PROFESIONALES_USUARIOS_SALUD as ps
+      left join CENTROS_SALUD as cs on ps.fk_centro_salud = cs.id_centro_salud
+      left join comunas as co on cs.id_comuna_fk = co.id_comuna
+      where id_profesional_salud  = ?`;
+                const listUsuarios = yield (0, consultasGenerales_1.consultasGenerales)(query, [id]);
+                return listUsuarios;
+            }
+            catch (err) {
+                console.log(err);
+                throw "Error consulta listar usuario";
+            }
+        });
+    }
     setRutProfesional(rutProfesional) {
         this.rutProfesional = rutProfesional;
     }
@@ -155,6 +177,9 @@ class Usuario {
     }
     setRolProfesional(rolProfesional) {
         this.rolProfesional = rolProfesional;
+    }
+    setEstado(estadoProfesional) {
+        this.estadoProfesional = estadoProfesional;
     }
 }
 exports.Usuario = Usuario;

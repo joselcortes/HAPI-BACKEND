@@ -7,7 +7,6 @@ export class SessionController {
   static async sesion(req: any, res: Response) {
     try {
       const { idProfesional, rol } = req.dataUsuario;
-
       const token = await objSesion.login(idProfesional, rol);
       res.set("Content-Type", "application/json");
       res.setHeader("Authorization", `Bearer ${token}`);
@@ -27,7 +26,6 @@ export class SessionController {
       const data: any = objSesion.verificarToken(
         header.authorization as string
       );
-
 
       const resultData = await objSesion.seleccionarUsuario(data.sub);
       res.status(200).json({

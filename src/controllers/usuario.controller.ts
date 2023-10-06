@@ -66,6 +66,7 @@ export class UsuarioController {
         contrasenaProfesional,
         rolProfesional,
         centroProfesional,
+        estadoProfesional,
       } = req.body;
 
       contrasenaHasheada = await hashContrasena(contrasenaProfesional);
@@ -76,6 +77,7 @@ export class UsuarioController {
       objUsuario.setContrasenaProfesional(contrasenaHasheada);
       objUsuario.setRolProfesional(rolProfesional);
       objUsuario.setCentroProfesional(centroProfesional);
+      objUsuario.setEstado(parseInt(estadoProfesional));
 
 
       const msjActualizarUsuario: string = await objUsuario.actualizarUsuario(

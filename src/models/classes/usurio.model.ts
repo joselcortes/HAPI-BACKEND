@@ -9,6 +9,8 @@ export class Usuario {
   private cargoProfesional?: string;
   private rolProfesional?: string;
   private centroProfesional?: number;
+  private estadoProfesional?: number;
+
 
   //admin
   //commonUser
@@ -20,6 +22,7 @@ export class Usuario {
     cargoProfesional?: string,
     rolProfesional?: string,
     centroProfesional?: number,
+    estadoProfesional?: number,
   ) {
 
     this.rutProfesional = rutProfesional;
@@ -28,12 +31,13 @@ export class Usuario {
     this.cargoProfesional = cargoProfesional;
     this.rolProfesional = rolProfesional;
     this.centroProfesional = centroProfesional;
+    this.estadoProfesional = estadoProfesional;
    
   }
 
   async ingresarUsuario() {
     try {
-      const query: string = `INSERT INTO PROFESIONALES_USUARIOS_SALUD VALUES (NULL,?,?,?,?,?,?)`;
+      const query: string = `INSERT INTO PROFESIONALES_USUARIOS_SALUD VALUES (NULL,?,?,?,?,?,?,?)`;
 
       await consultasGenerales(query, [
         this.rutProfesional,
@@ -41,7 +45,9 @@ export class Usuario {
         this.contrasenaProfesional,
         this.cargoProfesional,
         this.rolProfesional,
-        this.centroProfesional
+        this.centroProfesional,
+        1
+
       ]);
 
      
@@ -62,7 +68,8 @@ export class Usuario {
       contrasena = ?,
       cargo_profesional_salud  = ?,
       roles = ?,
-      fk_centro_salud = ?
+      fk_centro_salud = ?,
+      estado = ?
       WHERE id_profesional_salud = ?`;
 
 
@@ -74,6 +81,7 @@ export class Usuario {
         this.cargoProfesional,
         this.rolProfesional,
         this.centroProfesional,
+        this.estadoProfesional,
         idProfesionalSalud,
       ]);
 
@@ -94,7 +102,7 @@ export class Usuario {
         rut_profesional_salud,
         nombre_usuario,
         cargo_profesional_salud,  
-        fk_centro_salud, roles FROM profesionales_usuarios_salud WHERE roles != ?`;
+        fk_centro_salud, roles, estado FROM profesionales_usuarios_salud WHERE roles != ?`;
 
       const listUsuarios = await consultasGenerales(query, [rolApartado]);
       return listUsuarios;
@@ -133,7 +141,7 @@ export class Usuario {
         rut_profesional_salud,
         nombre_usuario,
         cargo_profesional_salud,  
-        fk_centro_salud, roles FROM profesionales_usuarios_salud WHERE rut_profesional_salud = '${rutUser}'`;
+        fk_centro_salud, roles, estado FROM profesionales_usuarios_salud WHERE rut_profesional_salud = '${rutUser}'`;
 
       const listUsuarios = await consultasGenerales(query, [rutUser]);
       return listUsuarios;
@@ -152,6 +160,23 @@ export class Usuario {
     } catch (err) {
       console.log(err);
       throw "Error en la cosulta, existencia usuario";
+    }
+  }
+
+  async buscarUsuario(id: number){
+    try {
+      const query: string = `
+      select id_profesional_salud, nombre_usuario, cargo_profesional_salud,
+      roles, co.nombre_comuna  , nombre_centro_salud ,logo  from PROFESIONALES_USUARIOS_SALUD as ps
+      left join CENTROS_SALUD as cs on ps.fk_centro_salud = cs.id_centro_salud
+      left join comunas as co on cs.id_comuna_fk = co.id_comuna
+      where id_profesional_salud  = ?`;
+
+      const listUsuarios = await consultasGenerales(query, [id]);
+      return listUsuarios;
+    } catch (err) {
+      console.log(err);
+      throw "Error consulta listar usuario";
     }
   }
 
@@ -174,5 +199,10 @@ export class Usuario {
   }
   public setRolProfesional(rolProfesional: string): void {
     this.rolProfesional = rolProfesional;
+  }
+
+  public setEstado(estadoProfesional: number):void {
+    
+    this.estadoProfesional = estadoProfesional;
   }
 }

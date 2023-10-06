@@ -60,8 +60,6 @@ export async function buscarRut(
 
   try { 
 
- 
-
     const data = await consultasGenerales(query, [rutPaciente]);
     if (!data[0]){
      
@@ -71,7 +69,7 @@ export async function buscarRut(
     next();
 
   } catch (err) {
-    res.status(500).json({
+    res.status(404).json({
       ok: false,
       err,
     });

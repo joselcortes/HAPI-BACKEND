@@ -29,13 +29,13 @@ export class Token {
 
   generarToken(){
 
-    this.token = jsonToken.sign(this.payload, this.secret, {expiresIn: '5h'});
+    this.token = jsonToken.sign(this.payload, process.env.SECRET_TOKEN!, {expiresIn: '5h'});
 
     return this.token;
   }
 
   verificarToken(token:string) {
-    this.dataToken = jsonToken.verify(token, this.secret);
+    this.dataToken = jsonToken.verify(token, process.env.SECRET_TOKEN!);
     return this.dataToken;
   }
 }

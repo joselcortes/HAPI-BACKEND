@@ -4,7 +4,7 @@ import { query } from 'express';
 import bcrypt from 'bcryptjs';
 
 export class Login {
-
+    public secret?: string;
     private email?: string; 
     private password?: string;
 
@@ -13,7 +13,9 @@ export class Login {
         password?: string,
     ) {
         this.email = email,
-        this.password = password
+        this.password = password;
+        // process.env.SECRET_TOKEN = 'MILuLTRAsECRETO';
+        
     }
 
     async verificarCuenta(){
@@ -53,6 +55,10 @@ export class Login {
                 reject('Usuario o contraseña incorrectos')
                 return;
             }
+            if(respuesta[0].estado != 1){
+                reject('El usuario se encuentra inactivo')
+                return
+            }
             resolve(respuesta);
             return
         });
@@ -63,11 +69,12 @@ export class Login {
         const us = usuario[0].nombre_usuario;
         const rol = usuario[0].roles;
         const prof = usuario[0].cargo_profesional_salud;
+        // const secret = process.env.SECRET_TOKEN = 'MILuLTRAsECRETO';
 
         const payload: any = { id, us, rol, prof };
 
-        return jwt.sign(payload, process.env.JWT!, {
-            expiresIn: '1h'
+        return jwt.sign(payload, process.env.SECRET_TOKEN! , {
+            expiresIn: '5h'
         })
     }
 
