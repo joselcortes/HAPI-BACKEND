@@ -1,7 +1,10 @@
 import { TablaController } from "../controllers/tabla.controller";
 import { Router } from "express";
-import { validarRut } from "../middlewares/validarRutConsulta.middleware";
+import TokenMiddleware from "../middlewares/validaToken.middleware";
+
 const router = Router();
+const tokenMiddleware: TokenMiddleware = new TokenMiddleware();
+
 
 
 router.get('/listar', TablaController.listarPaciente);

@@ -60,32 +60,58 @@ export class Usuario {
 
   async actualizarUsuario(idProfesionalSalud: number) {
     try {
-
+      if( this.contrasenaProfesional != undefined){
         const query: string = `
-      UPDATE PROFESIONALES_USUARIOS_SALUD SET
-      rut_profesional_salud = ?, 
-      nombre_usuario = ?,
-      contrasena = ?,
-      cargo_profesional_salud  = ?,
-      roles = ?,
-      fk_centro_salud = ?,
-      estado = ?
-      WHERE id_profesional_salud = ?`;
-
-
+        UPDATE PROFESIONALES_USUARIOS_SALUD SET
+        rut_profesional_salud = ?, 
+        nombre_usuario = ?,
+        contrasena = ?,
+        cargo_profesional_salud  = ?,
+        roles = ?,
+        fk_centro_salud = ?,
+        estado = ?
+        WHERE id_profesional_salud = ?`;
+  
+  
+        
+        consultasGenerales(query, [
+          this.rutProfesional,
+          this.nombreProfesional,
+          this.contrasenaProfesional,
+          this.cargoProfesional,
+          this.rolProfesional,
+          this.centroProfesional,
+          this.estadoProfesional,
+          idProfesionalSalud,
+        ]);
+  
+        return "Los cambios se han guardado correctamente";
+      }else{
+        const query: string = `
+        UPDATE PROFESIONALES_USUARIOS_SALUD SET
+        rut_profesional_salud = ?, 
+        nombre_usuario = ?,
+        cargo_profesional_salud  = ?,
+        roles = ?,
+        fk_centro_salud = ?,
+        estado = ?
+        WHERE id_profesional_salud = ?`;
+  
+  
+        
+        consultasGenerales(query, [
+          this.rutProfesional,
+          this.nombreProfesional,
+          this.cargoProfesional,
+          this.rolProfesional,
+          this.centroProfesional,
+          this.estadoProfesional,
+          idProfesionalSalud,
+        ]);
+  
+        return "Los cambios se han guardado correctamente";
+      }
       
-      consultasGenerales(query, [
-        this.rutProfesional,
-        this.nombreProfesional,
-        this.contrasenaProfesional,
-        this.cargoProfesional,
-        this.rolProfesional,
-        this.centroProfesional,
-        this.estadoProfesional,
-        idProfesionalSalud,
-      ]);
-
-      return "Los cambios se han guardado correctamente";
     } catch (err) {
       console.log(err);
       throw "Error al actualizar usuario";

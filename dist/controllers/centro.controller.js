@@ -76,7 +76,7 @@ class CentrosController {
             }
         });
     }
-    static elimianrCentro(req, res) {
+    static eliminarCentro(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 // const rutaCentros = req.body;
@@ -90,6 +90,10 @@ class CentrosController {
                     }).catch((err) => {
                         console.error('Something wrong happened removing the file', err);
                     });
+                }
+                if (eliminar.serverStatus != 2) {
+                    res.status(200).json(false);
+                    return;
                 }
                 res.status(200).json(eliminar);
             }
@@ -117,7 +121,6 @@ class CentrosController {
                     nombre = nombre_centro_salud.replace(/\s+/g, '_');
                     nombreArchivo = nombre + ext;
                     nuevoLogo = `dist/assets/img/${nombreArchivo}`;
-                    console.log(archivo);
                 }
                 const { idCentro } = req.params;
                 centro_salud.setNombreCentroSalud(nombre_centro_salud);

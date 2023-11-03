@@ -66,7 +66,7 @@ export class CentrosController{
         }
     }
 
-    static async elimianrCentro(req: Request, res: Response){
+    static async eliminarCentro(req: Request, res: Response){
         try {
             // const rutaCentros = req.body;
             const {ruta} = req.body
@@ -80,7 +80,12 @@ export class CentrosController{
                         console.error('Something wrong happened removing the file', err)
                     })
             }
-            res.status(200).json(eliminar)
+            if(eliminar.serverStatus != 2){
+                res.status(200).json(false);
+                return;
+            }
+
+            res.status(200).json(eliminar);
         } catch (error) {
             res.status(500).json({
                 msg: 'Error al conectar',
@@ -110,7 +115,6 @@ export class CentrosController{
                 nombre = nombre_centro_salud.replace(/\s+/g, '_');
                 nombreArchivo = nombre + ext
                 nuevoLogo = `dist/assets/img/${nombreArchivo}`;
-                console.log(archivo);
             }
             const { idCentro } = req.params
             

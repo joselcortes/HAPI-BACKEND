@@ -15,6 +15,9 @@ const fichas_routes_1 = __importDefault(require("./fichas.routes"));
 const centro_routes_1 = __importDefault(require("./centro.routes"));
 const comunas_routes_1 = __importDefault(require("./comunas.routes"));
 const login_routes_1 = __importDefault(require("./login.routes"));
+const token_routes_1 = __importDefault(require("./token.routes"));
+const validaToken_middleware_1 = __importDefault(require("../middlewares/validaToken.middleware"));
+const tokenMiddleware = new validaToken_middleware_1.default();
 const router = (0, express_1.Router)();
 function endPoints(app) {
     app.use('/api/v1', router);
@@ -28,5 +31,6 @@ function endPoints(app) {
     router.use('/fonasa', apiCesfam_routes_1.default);
     router.use('/comuna', comunas_routes_1.default);
     router.use('/login', login_routes_1.default);
+    router.use('/token', token_routes_1.default);
 }
 exports.endPoints = endPoints;

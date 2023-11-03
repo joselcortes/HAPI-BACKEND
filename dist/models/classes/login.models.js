@@ -80,7 +80,7 @@ Login.generarToken = (usuario) => {
     // const secret = process.env.SECRET_TOKEN = 'MILuLTRAsECRETO';
     const payload = { id, us, rol, prof };
     return jsonwebtoken_1.default.sign(payload, process.env.SECRET_TOKEN, {
-        expiresIn: '5h'
+        expiresIn: '1h'
     });
 };
 exports.Login = Login;

@@ -11,5 +11,7 @@ const loginController = new login_controller_1.default();
 const tokenMiddleware = new validaToken_middleware_1.default();
 router.post('/verificar-usuario', loginController.login);
 router.get('/verificar-token', [tokenMiddleware.verificarToken], loginController.verificarToken);
-router.post('/pedir-usuario', loginController.buscarUsuario);
+router.post('/renovar-token', loginController.renovarToken);
+// router.get('/obtener-tiempo-token', [tokenMiddleware.verificarToken], )
+// router.post('/pedir-usuario', loginController.buscarUsuario);
 exports.default = router;

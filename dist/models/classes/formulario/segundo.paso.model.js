@@ -62,7 +62,6 @@ class FormularioSegundoPaso extends primer_paso_model_1.FormularioPrimerPaso {
                     }
                 }
                 (_a = this.tipoPrenda) === null || _a === void 0 ? void 0 : _a.map((data) => __awaiter(this, void 0, void 0, function* () {
-                    console.log(data);
                     yield (0, consultasGenerales_1.consultasGenerales)(query1, [idHgenero, data]);
                 }));
                 return { idHgenero };
@@ -105,7 +104,6 @@ class FormularioSegundoPaso extends primer_paso_model_1.FormularioPrimerPaso {
                     // this.apellidoPaternoPaHG,
                     // this.apellidoMaternoPaHG,
                 ]));
-                console.log(idPrenda);
                 idPrenda.map((data) => {
                     (0, consultasGenerales_1.consultasGenerales)(queryPrenda, [
                         this.tipoPrenda[cont],

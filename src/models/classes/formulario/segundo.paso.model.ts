@@ -92,7 +92,6 @@ export class FormularioSegundoPaso
 
 
       this.tipoPrenda?.map(async (data)=>{
-        console.log(data);
         await consultasGenerales(query1, [idHgenero, data]);
 
       });
@@ -146,7 +145,6 @@ export class FormularioSegundoPaso
       ]);
 
       
-      console.log(idPrenda);
       idPrenda.map((data)=>{
      
        consultasGenerales(queryPrenda, [

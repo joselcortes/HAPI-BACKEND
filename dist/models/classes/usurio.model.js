@@ -47,27 +47,50 @@ class Usuario {
     actualizarUsuario(idProfesionalSalud) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = `
-      UPDATE PROFESIONALES_USUARIOS_SALUD SET
-      rut_profesional_salud = ?, 
-      nombre_usuario = ?,
-      contrasena = ?,
-      cargo_profesional_salud  = ?,
-      roles = ?,
-      fk_centro_salud = ?,
-      estado = ?
-      WHERE id_profesional_salud = ?`;
-                (0, consultasGenerales_1.consultasGenerales)(query, [
-                    this.rutProfesional,
-                    this.nombreProfesional,
-                    this.contrasenaProfesional,
-                    this.cargoProfesional,
-                    this.rolProfesional,
-                    this.centroProfesional,
-                    this.estadoProfesional,
-                    idProfesionalSalud,
-                ]);
-                return "Los cambios se han guardado correctamente";
+                if (this.contrasenaProfesional != undefined) {
+                    const query = `
+        UPDATE PROFESIONALES_USUARIOS_SALUD SET
+        rut_profesional_salud = ?, 
+        nombre_usuario = ?,
+        contrasena = ?,
+        cargo_profesional_salud  = ?,
+        roles = ?,
+        fk_centro_salud = ?,
+        estado = ?
+        WHERE id_profesional_salud = ?`;
+                    (0, consultasGenerales_1.consultasGenerales)(query, [
+                        this.rutProfesional,
+                        this.nombreProfesional,
+                        this.contrasenaProfesional,
+                        this.cargoProfesional,
+                        this.rolProfesional,
+                        this.centroProfesional,
+                        this.estadoProfesional,
+                        idProfesionalSalud,
+                    ]);
+                    return "Los cambios se han guardado correctamente";
+                }
+                else {
+                    const query = `
+        UPDATE PROFESIONALES_USUARIOS_SALUD SET
+        rut_profesional_salud = ?, 
+        nombre_usuario = ?,
+        cargo_profesional_salud  = ?,
+        roles = ?,
+        fk_centro_salud = ?,
+        estado = ?
+        WHERE id_profesional_salud = ?`;
+                    (0, consultasGenerales_1.consultasGenerales)(query, [
+                        this.rutProfesional,
+                        this.nombreProfesional,
+                        this.cargoProfesional,
+                        this.rolProfesional,
+                        this.centroProfesional,
+                        this.estadoProfesional,
+                        idProfesionalSalud,
+                    ]);
+                    return "Los cambios se han guardado correctamente";
+                }
             }
             catch (err) {
                 console.log(err);

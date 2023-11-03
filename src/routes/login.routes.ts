@@ -6,8 +6,10 @@ const loginController: LoginController = new LoginController();
 const tokenMiddleware: TokenMiddleware = new TokenMiddleware();
 
 router.post('/verificar-usuario', loginController.login);
-router.get('/verificar-token', [tokenMiddleware.verificarToken],loginController.verificarToken);
-router.post('/pedir-usuario', loginController.buscarUsuario);
+router.get('/verificar-token', [tokenMiddleware.verificarToken], loginController.verificarToken);
+router.post('/renovar-token',loginController.renovarToken);
+// router.get('/obtener-tiempo-token', [tokenMiddleware.verificarToken], )
+// router.post('/pedir-usuario', loginController.buscarUsuario);
 
 
 export default router;

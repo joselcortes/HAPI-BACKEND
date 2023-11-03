@@ -59,7 +59,6 @@ class Centros {
     actualizarCentroSinImg(idCentro) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(idCentro);
                 const query = `
                 update centros_salud set
                 nombre_centro_salud = ?,

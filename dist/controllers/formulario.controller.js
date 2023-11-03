@@ -112,7 +112,6 @@ class FormularioController {
                 return res.status(201).json(resFinalizacion);
             }
             catch (err) {
-                console.log();
                 return res.status(400).json({
                     err,
                     msj: "Error interno del servidor",

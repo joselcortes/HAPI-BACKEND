@@ -60,7 +60,6 @@ export class Centros {
 
     async actualizarCentroSinImg(idCentro: number){
         try {
-            console.log(idCentro);
             const query: string = `
                 update centros_salud set
                 nombre_centro_salud = ?,

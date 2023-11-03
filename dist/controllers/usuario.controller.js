@@ -66,7 +66,9 @@ class UsuarioController {
                 objUsuario.setRutProfesional(rutProfesional);
                 objUsuario.setNombreProfesional(nombreProfesional);
                 objUsuario.setCargoProfesional(cargoProfesional);
-                objUsuario.setContrasenaProfesional(contrasenaHasheada);
+                if (contrasenaProfesional != '') {
+                    objUsuario.setContrasenaProfesional(contrasenaHasheada);
+                }
                 objUsuario.setRolProfesional(rolProfesional);
                 objUsuario.setCentroProfesional(centroProfesional);
                 objUsuario.setEstado(parseInt(estadoProfesional));

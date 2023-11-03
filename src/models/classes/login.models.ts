@@ -74,7 +74,7 @@ export class Login {
         const payload: any = { id, us, rol, prof };
 
         return jwt.sign(payload, process.env.SECRET_TOKEN! , {
-            expiresIn: '5h'
+            expiresIn: '1h'
         })
     }
 
